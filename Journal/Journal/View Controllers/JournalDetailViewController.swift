@@ -15,6 +15,7 @@ class JournalDetailViewController: UIViewController {
     
     var journalController: JournalController?
     
+    @IBOutlet weak var moodSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textView: UITextView!
     
@@ -28,6 +29,13 @@ class JournalDetailViewController: UIViewController {
         
         title = journal?.title ?? ""
         
+        if let moodString = journal?.mood,
+            let mood = Mood(rawValue: moodString) {
+            
+            let index = Mood.allCases.firstIndex(of: mood) ?? 0
+            
+            moodSegmentedControl.selectedSegmentIndex = index
+        }
         textField.text = journal?.title
         textView.text = journal?.bodyText
         
@@ -41,10 +49,13 @@ class JournalDetailViewController: UIViewController {
         guard let title = textField.text,
             let body = textView.text else {return}
         
+        let index = moodSegmentedControl.selectedSegmentIndex
+        let mood = Mood.allCases[index]
+        
         if let journal = journal {
-            journalController?.updateTask(journal: journal, with: title, bodyText: body, identifier: "", time: time)
+            journalController?.updateTask(journal: journal, with: title, bodyText: body, identifier: "", time: time, mood: mood)
         } else {
-            journalController?.createJournal(with: title, bodyText: body, identifier: "", time: time)
+            journalController?.createJournal(with: title, bodyText: body, identifier: "", time: time, mood: mood)
         }
         
         navigationController?.popViewController(animated: true)

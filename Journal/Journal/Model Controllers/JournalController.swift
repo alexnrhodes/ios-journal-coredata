@@ -12,9 +12,9 @@ import CoreData
 class JournalController {
     
     
-    @discardableResult func createJournal(with title: String, bodyText: String, identifier: String?, time: Date) -> Journal {
+    @discardableResult func createJournal(with title: String, bodyText: String, identifier: String?, time: Date, mood: Mood) -> Journal {
     
-        let entry = Journal(title: title, bodyText: bodyText, identifier: identifier ?? "", time: time, context: CoreDataStack.shared.mainContext)
+        let entry = Journal(title: title, bodyText: bodyText, identifier: identifier, time: time, mood: mood, context: CoreDataStack.shared.mainContext)
         
         CoreDataStack.shared.saveToPersistentStore()
         
@@ -22,11 +22,12 @@ class JournalController {
     
     }
     
-    func updateTask(journal: Journal, with title: String, bodyText: String?, identifier: String, time: Date) {
+    func updateTask(journal: Journal, with title: String, bodyText: String?, identifier: String, time: Date, mood: Mood) {
         
         journal.title = title
         journal.bodyText = bodyText
         journal.identifier = identifier
+        journal.mood = mood.rawValue
         
         
         CoreDataStack.shared.saveToPersistentStore()

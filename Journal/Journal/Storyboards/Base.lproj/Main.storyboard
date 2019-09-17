@@ -75,8 +75,16 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mr3-We-Yq9">
                                 <rect key="frame" x="20" y="160" width="374" height="400"/>
                                 <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="70h-A5-VSE">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
+                                        <segments>
+                                            <segment title="😶"/>
+                                            <segment title="🙂"/>
+                                            <segment title="😎"/>
+                                        </segments>
+                                    </segmentedControl>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qM7-lR-IMX">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="36" width="374" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="anu-EL-uac"/>
@@ -86,7 +94,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="What would you like to say?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kdb-3o-Ou3">
-                                        <rect key="frame" x="0.0" y="38" width="374" height="362"/>
+                                        <rect key="frame" x="0.0" y="74" width="374" height="326"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -97,7 +105,10 @@
                                     <constraint firstAttribute="height" constant="400" id="6Xy-v1-lUk"/>
                                     <constraint firstItem="qM7-lR-IMX" firstAttribute="leading" secondItem="mr3-We-Yq9" secondAttribute="leading" id="8az-wq-NU9"/>
                                     <constraint firstAttribute="trailing" secondItem="qM7-lR-IMX" secondAttribute="trailing" id="BEN-1n-3e5"/>
+                                    <constraint firstItem="70h-A5-VSE" firstAttribute="top" secondItem="mr3-We-Yq9" secondAttribute="top" id="KTG-dm-gVa"/>
+                                    <constraint firstAttribute="trailing" secondItem="70h-A5-VSE" secondAttribute="trailing" id="WvK-ph-Jp0"/>
                                     <constraint firstAttribute="trailing" secondItem="kdb-3o-Ou3" secondAttribute="trailing" id="XEf-27-Mow"/>
+                                    <constraint firstItem="70h-A5-VSE" firstAttribute="leading" secondItem="mr3-We-Yq9" secondAttribute="leading" id="XJd-n8-Y4c"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -117,6 +128,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="moodSegmentedControl" destination="70h-A5-VSE" id="knr-g5-qNb"/>
                         <outlet property="textField" destination="qM7-lR-IMX" id="q9V-nB-z1u"/>
                         <outlet property="textView" destination="kdb-3o-Ou3" id="c0y-tC-d8U"/>
                     </connections>
