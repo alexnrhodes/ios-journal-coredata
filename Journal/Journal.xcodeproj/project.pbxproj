@@ -17,6 +17,7 @@
 		381FC7432330337F00A906D2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FC7422330337F00A906D2 /* CoreDataStack.swift */; };
 		381FC7452330339400A906D2 /* JournalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FC7442330339400A906D2 /* JournalDetailViewController.swift */; };
 		381FC747233033A200A906D2 /* JournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FC746233033A200A906D2 /* JournalTableViewController.swift */; };
+		38879BBC2332CFE000A2FC3C /* JournalRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38879BBB2332CFE000A2FC3C /* JournalRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		381FC7442330339400A906D2 /* JournalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalDetailViewController.swift; sourceTree = "<group>"; };
 		381FC746233033A200A906D2 /* JournalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewController.swift; sourceTree = "<group>"; };
 		381FC74D233138F300A906D2 /* Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal 2.xcdatamodel"; sourceTree = "<group>"; };
+		38879BBB2332CFE000A2FC3C /* JournalRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalRepresentation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			children = (
 				381FC73B2330333E00A906D2 /* Journal.xcdatamodeld */,
 				381FC73E2330335F00A906D2 /* Jornal+Convenience.swift */,
+				38879BBB2332CFE000A2FC3C /* JournalRepresentation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				381FC7452330339400A906D2 /* JournalDetailViewController.swift in Sources */,
 				381FC7242330313A00A906D2 /* AppDelegate.swift in Sources */,
 				381FC747233033A200A906D2 /* JournalTableViewController.swift in Sources */,
+				38879BBC2332CFE000A2FC3C /* JournalRepresentation.swift in Sources */,
 				381FC7412330337200A906D2 /* JournalController.swift in Sources */,
 				381FC73F2330335F00A906D2 /* Jornal+Convenience.swift in Sources */,
 				381FC73D2330333E00A906D2 /* Journal.xcdatamodeld in Sources */,
@@ -354,6 +358,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
 				INFOPLIST_FILE = "$(SRCROOT)/Journal/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -372,6 +377,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
 				INFOPLIST_FILE = "$(SRCROOT)/Journal/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
