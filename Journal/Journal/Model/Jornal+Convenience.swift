@@ -41,7 +41,7 @@ extension Journal {
         
     }
     
-    @discardableResult convenience init?(journalRepresentation: JournalRepresentation, context: NSManagedObjectContext) {
+    @discardableResult convenience init?(journalRepresentation: JournalRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         
         let title = journalRepresentation.title
         let body = journalRepresentation.bodyText

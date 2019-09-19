@@ -21,6 +21,7 @@ class CoreDataStack {
     lazy var container: NSPersistentContainer = {
         
         let container = NSPersistentContainer(name: "Journal")
+        container.viewContext.automaticallyMergesChangesFromParent = true
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error {
                 fatalError("Core data was unable to load persistence stores: \(error)")
@@ -35,12 +36,18 @@ class CoreDataStack {
         return container.viewContext
     }
     
-    func saveToPersistentStore() {
-        do {
-            try mainContext.save()
-        } catch {
-            NSLog("error saving context: \(error)")
-            mainContext.reset()
+    var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
+    
+    func save(context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                NSLog("error saving context: \(error)")
+                context.reset()
+            }
         }
     }
 }

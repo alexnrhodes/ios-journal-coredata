@@ -117,39 +117,44 @@ class JournalController {
         // Make a mutable copy of the dictionary above
         var tasksToCreate = representationsByID
         
-        do {
-            let context = CoreDataStack.shared.mainContext
+        let context = CoreDataStack.shared.backgroundContext
+        
+        context.performAndWait {
             
-            let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
-            
-            // identifier == \(identifier)
-            fetchRequest.predicate = NSPredicate(format: "identifier IN %@", identifiersToFetch)
-            
-            // Which of these tasks exist in Core Data already?
-            let existingTasks = try context.fetch(fetchRequest)
-            
-            // Which need to be updated? Which need to be put into Core Data?
-            for journal in existingTasks {
-                guard let identifier = UUID(uuidString: journal.identifier!),
-                    // This gets the task representation that corresponds to the task from Core Data
-                    let representation = representationsByID[identifier] else { continue }
+            do {
                 
-                journal.title = representation.title
-                journal.bodyText = representation.bodyText
-                journal.mood = representation.mood
                 
-                tasksToCreate.removeValue(forKey: identifier)
+                let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
+                
+                // identifier == \(identifier)
+                fetchRequest.predicate = NSPredicate(format: "identifier IN %@", identifiersToFetch)
+                
+                // Which of these tasks exist in Core Data already?
+                let existingTasks = try context.fetch(fetchRequest)
+                
+                // Which need to be updated? Which need to be put into Core Data?
+                for journal in existingTasks {
+                    guard let identifier = UUID(uuidString: journal.identifier!),
+                        // This gets the task representation that corresponds to the task from Core Data
+                        let representation = representationsByID[identifier] else { continue }
+                    
+                    journal.title = representation.title
+                    journal.bodyText = representation.bodyText
+                    journal.mood = representation.mood
+                    
+                    tasksToCreate.removeValue(forKey: identifier)
+                }
+                
+                // Take the tasks that AREN'T in Core Data and create new ones for them.
+                for representation in tasksToCreate.values {
+                    Journal(journalRepresentation: representation, context: context)
+                }
+                
+                CoreDataStack.shared.save(context: context)
+                
+            } catch {
+                NSLog("Error fetching tasks from persistent store: \(error)")
             }
-            
-            // Take the tasks that AREN'T in Core Data and create new ones for them.
-            for representation in tasksToCreate.values {
-               Journal(journalRepresentation: representation, context: context)
-            }
-            
-            CoreDataStack.shared.saveToPersistentStore()
-            
-        } catch {
-            NSLog("Error fetching tasks from persistent store: \(error)")
         }
     }
     
@@ -169,15 +174,15 @@ class JournalController {
                 NSLog("Error deleting task: \(error)")
                 completion(error)
             }
-        }.resume()
+            }.resume()
     }
     
     func createJournal(with title: String, bodyText: String, mood: Mood) {
-    
+        
         let journal = Journal(title: title, bodyText: bodyText, mood: mood)
-        CoreDataStack.shared.saveToPersistentStore()
+        CoreDataStack.shared.save()
         put(journal: journal)
-
+        
     }
     
     func updateJournal(journal: Journal, with title: String, bodyText: String?, time: Date, mood: Mood) {
@@ -187,17 +192,20 @@ class JournalController {
         journal.mood = mood.rawValue
         put(journal: journal)
         
-        CoreDataStack.shared.saveToPersistentStore()
+        CoreDataStack.shared.save()
     }
     
     func delete(journal: Journal){
         
-        deleteEntryFromServer(journal: journal) { (error) in
-            NSLog("Error deleting journal")
-        }
-        CoreDataStack.shared.mainContext.delete(journal)
-        CoreDataStack.shared.saveToPersistentStore()
+        let context = CoreDataStack.shared.mainContext
         
+        context.performAndWait {
+            deleteEntryFromServer(journal: journal) { (error) in
+                NSLog("Error deleting journal")
+            }
+            context.delete(journal)
+            CoreDataStack.shared.save()
+            
+        }
     }
-    
 }
