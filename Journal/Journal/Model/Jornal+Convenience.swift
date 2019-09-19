@@ -22,14 +22,14 @@ extension Journal {
         guard let title = title,
             let body = bodyText,
             let time = time,
-            let identifier = identifier?.uuidString,
+            let identifier = identifier,
             let mood = mood else {return nil}
         
         
         return JournalRepresentation(title: title, time: time, mood: mood, identifier: identifier, bodyText: body)
     }
     
-    convenience init(title: String, bodyText: String, identifier: UUID = UUID(), time: Date, mood:  Mood, context: NSManagedObjectContext) {
+    convenience init(title: String, bodyText: String, identifier: String = UUID().uuidString, time: Date = Date(), mood:  Mood, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         
         self.init(context: context)
         
@@ -43,11 +43,13 @@ extension Journal {
     
     @discardableResult convenience init?(journalRepresentation: JournalRepresentation, context: NSManagedObjectContext) {
         
-        guard let identifier = UUID(uuidString: journalRepresentation.identifier),
-            let mood = Mood(rawValue: journalRepresentation.mood) else {return}
+        let title = journalRepresentation.title
+        let body = journalRepresentation.bodyText
+        let identifier = journalRepresentation.identifier
+        let time = journalRepresentation.time
         
-        self.init(title: journalRepresentation.title, bodyText: journalRepresentation.bodyText, identifier: identifier, time: journalRepresentation.time, mood: mood, context: context)
+        guard let mood = Mood(rawValue: journalRepresentation.mood) else {return nil}
+        
+        self.init(title: title, bodyText: body, identifier: identifier, time: time, mood: mood, context: context)
     }
-    
-    
 }

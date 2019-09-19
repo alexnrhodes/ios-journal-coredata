@@ -53,9 +53,9 @@ class JournalDetailViewController: UIViewController {
         let mood = Mood.allCases[index]
         
         if let journal = journal {
-            journalController?.updateTask(journal: journal, with: title, bodyText: body, identifier: "", time: time, mood: mood)
+            journalController?.updateJournal(journal: journal, with: title, bodyText: body, time: time, mood: mood)
         } else {
-            journalController?.createJournal(with: title, bodyText: body, identifier: "", time: time, mood: mood)
+            journalController?.createJournal(with: title, bodyText: body, mood: mood)
         }
         
         navigationController?.popViewController(animated: true)

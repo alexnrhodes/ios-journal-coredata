@@ -23,7 +23,7 @@ class CoreDataStack {
         let container = NSPersistentContainer(name: "Journal")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error {
-                fatalError("Core sata was unable to load persistence stores: \(error)")
+                fatalError("Core data was unable to load persistence stores: \(error)")
             }
         })
         
