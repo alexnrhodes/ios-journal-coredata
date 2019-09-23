@@ -37,6 +37,7 @@ class CoreDataStack {
     }
     
     var backgroundContext: NSManagedObjectContext {
+
         return container.newBackgroundContext()
     }
     

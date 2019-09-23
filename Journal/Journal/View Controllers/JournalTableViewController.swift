@@ -17,7 +17,7 @@ class JournalTableViewController: UITableViewController {
         
         let request: NSFetchRequest<Journal> = Journal.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "mood", ascending: true)]
-        
+        // basically sorts everything
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataStack.shared.mainContext, sectionNameKeyPath: "mood", cacheName: nil)
         
         frc.delegate = self
@@ -28,9 +28,8 @@ class JournalTableViewController: UITableViewController {
             fatalError("Error performing fetch for frc: \(error)")
         }
         
-        
         return frc
-        
+    
     }()
 
     override func viewDidLoad() {
